@@ -14,40 +14,44 @@
     <header class="top-header">
         <div class="container top-header-inner">
             <div class="logo-area">
-                <img src="logo.png" alt="Oinance Link Logo" class="logo">
+                <img src="IMG_20260916_192545.jpg" alt="Oinance Link Logo" class="logo">
                 <div class="brand">
                     <span class="brand-name">OINANCE LINK</span>
                     <span class="tagline">The future of money</span>
                 </div>
             </div>
+
             <div class="header-actions">
                 <div class="ecosystem-btn">Ecosystem ▾</div>
                 <div class="social-icons">
-                    <a href="#" aria-label="X">𝕏</a>
-                    <a href="#" aria-label="Telegram">✈</a>
-                    <a href="#" aria-label="YouTube">▶</a>
-                    <a href="#" aria-label="Facebook">f</a>
+                    <a href="#">𝕏</a>
+                    <a href="#">✈</a>
+                    <a href="#">▶</a>
+                    <a href="#">f</a>
                 </div>
                 <div class="lang-select">English ▾</div>
-                <button class="theme-toggle" aria-label="Toggle theme">☀</button>
+                <button class="theme-toggle">☀</button>
             </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
         </div>
     </header>
 
     <!-- Main Navigation -->
-    <nav class="main-nav">
+    <nav class="main-nav" id="mainNav">
         <div class="container nav-inner">
             <ul class="nav-links">
-                <li><a href="#" class="active">News ▾</a></li>
+                <li><a href="#" class="active">News</a></li>
                 <li><a href="#">Markets</a></li>
-                <li><a href="#">Features ▾</a></li>
+                <li><a href="#">Features</a></li>
                 <li><a href="#">Research</a></li>
                 <li><a href="#">Podcasts</a></li>
                 <li><a href="#">Newsletters</a></li>
-                <li><a href="#">Commissioned ▾</a></li>
-                <li><a href="#">About ▾</a></li>
+                <li><a href="#">Commissioned</a></li>
+                <li><a href="#">About</a></li>
             </ul>
-            <button class="search-btn" aria-label="Search">🔍</button>
+            <button class="search-btn">🔍</button>
         </div>
     </nav>
 
@@ -64,7 +68,7 @@
             <div class="ticker-item"><span class="coin">AVAX</span> $28.75 <span class="up">▲ 1.05%</span></div>
             <div class="ticker-item"><span class="coin">DOT</span> $5.84 <span class="down">▼ 0.78%</span></div>
             <div class="ticker-item"><span class="coin">LINK</span> $14.92 <span class="up">▲ 2.33%</span></div>
-            <!-- Duplicate for seamless loop -->
+            <!-- Duplicate -->
             <div class="ticker-item"><span class="coin">BTC</span> $84,215.30 <span class="up">▲ 1.24%</span></div>
             <div class="ticker-item"><span class="coin">ETH</span> $2,691.45 <span class="up">▲ 0.87%</span></div>
             <div class="ticker-item"><span class="coin">SOL</span> $148.20 <span class="down">▼ 0.42%</span></div>
@@ -75,6 +79,7 @@
 
     <!-- Main Content -->
     <main class="container main-content">
+
         <!-- Hero Section -->
         <section class="hero">
             <div class="hero-left">
@@ -107,9 +112,7 @@
             <div class="hero-center">
                 <div class="featured-card">
                     <div class="featured-image">
-                        <div class="placeholder-img featured-placeholder">
-                            <span>Featured Story</span>
-                        </div>
+                        <div class="placeholder-img featured-placeholder"></div>
                         <div class="featured-overlay">
                             <h2>MetaMask integrates advanced security protocols after major incident review</h2>
                             <p>The popular wallet announces new self-custody features and real-time threat monitoring following a detailed internal security audit.</p>
@@ -215,8 +218,8 @@
                 <article class="news-card featured-mag">
                     <div class="card-img placeholder-img mag-2"></div>
                     <div class="card-body">
-                        <h3>Could cross-chain bridges face new regulatory scrutiny? Legal analysis</h3>
-                        <p>Recent security incidents raise important questions about liability and compliance across decentralized networks.</p>
+                        <h3>Could cross-chain bridges face new regulatory scrutiny?</h3>
+                        <p>Recent security incidents raise important questions about liability and compliance.</p>
                         <div class="meta">
                             <span class="author">Alex Rivera</span>
                             <span class="time">18 hours ago</span>
@@ -236,7 +239,7 @@
             </div>
         </section>
 
-        <!-- Bitcoin & Ethereum Row -->
+        <!-- Bitcoin & Ethereum -->
         <div class="two-col-sections">
             <section class="category-section">
                 <div class="section-header">
@@ -246,21 +249,21 @@
                     <article class="list-item">
                         <div class="list-img placeholder-img small"></div>
                         <div>
-                            <h4>US crypto ETF inflows cool after strong week but streaks hold</h4>
+                            <h4>US crypto ETF inflows cool after strong week</h4>
                             <span class="meta">Alex Rivera · Sep 30, 2026</span>
                         </div>
                     </article>
                     <article class="list-item">
                         <div class="list-img placeholder-img small"></div>
                         <div>
-                            <h4>Bitcoin bounces to $84K after bond yields hit multi-year highs</h4>
+                            <h4>Bitcoin bounces to $84K after bond yields rise</h4>
                             <span class="meta">Jordan Lee · Sep 29, 2026</span>
                         </div>
                     </article>
                     <article class="list-item">
                         <div class="list-img placeholder-img small"></div>
                         <div>
-                            <h4>Corporate treasury adds another 1,200 BTC to holdings</h4>
+                            <h4>Corporate treasury adds another 1,200 BTC</h4>
                             <span class="meta">Sam Patel · Sep 28, 2026</span>
                         </div>
                     </article>
@@ -275,21 +278,21 @@
                     <article class="list-item">
                         <div class="list-img placeholder-img small"></div>
                         <div>
-                            <h4>Ethereum schedules next major upgrade on testnet for October</h4>
+                            <h4>Ethereum schedules next major upgrade</h4>
                             <span class="meta">Mia Chen · Sep 30, 2026</span>
                         </div>
                     </article>
                     <article class="list-item">
                         <div class="list-img placeholder-img small"></div>
                         <div>
-                            <h4>Layer-2 activity hits all-time high amid growing DeFi usage</h4>
+                            <h4>Layer-2 activity hits all-time high</h4>
                             <span class="meta">Alex Rivera · Sep 29, 2026</span>
                         </div>
                     </article>
                     <article class="list-item">
                         <div class="list-img placeholder-img small"></div>
                         <div>
-                            <h4>Vitalik discusses long-term scaling roadmap in new interview</h4>
+                            <h4>Vitalik discusses long-term scaling roadmap</h4>
                             <span class="meta">Jordan Lee · Sep 28, 2026</span>
                         </div>
                     </article>
@@ -297,7 +300,7 @@
             </section>
         </div>
 
-        <!-- Newsletter CTA -->
+        <!-- Newsletter -->
         <section class="newsletter-section">
             <div class="newsletter-box">
                 <div class="newsletter-content">
@@ -323,7 +326,6 @@
                     <li><a href="#">Bitcoin</a></li>
                     <li><a href="#">Ethereum</a></li>
                     <li><a href="#">Altcoins</a></li>
-                    <li><a href="#">Regulation</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -332,7 +334,6 @@
                     <li><a href="#">All Articles</a></li>
                     <li><a href="#">Features</a></li>
                     <li><a href="#">Analysis</a></li>
-                    <li><a href="#">Interviews</a></li>
                     <li><a href="#">Guides</a></li>
                 </ul>
             </div>
@@ -342,7 +343,6 @@
                     <li><a href="#">About Oinance Link</a></li>
                     <li><a href="#">Editorial Policy</a></li>
                     <li><a href="#">Advertise</a></li>
-                    <li><a href="#">Careers</a></li>
                     <li><a href="#">Contact</a></li>
                 </ul>
             </div>
@@ -350,23 +350,14 @@
                 <h4>Follow Us</h4>
                 <div class="footer-social">
                     <a href="#">𝕏</a>
-                    <a href="#">LinkedIn</a>
                     <a href="#">Telegram</a>
                     <a href="#">YouTube</a>
-                </div>
-                <div class="app-badges">
-                    <div class="app-badge">App Store</div>
-                    <div class="app-badge">Google Play</div>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
             <div class="container">
-                <p>© 2026 Oinance Link. All rights reserved. | Independent crypto & finance journalism.</p>
-                <div class="footer-links">
-                    <a href="#">Terms of Service</a>
-                    <a href="#">Privacy Policy</a>
-                </div>
+                <p>© 2026 Oinance Link. All rights reserved.</p>
             </div>
         </div>
     </footer>
