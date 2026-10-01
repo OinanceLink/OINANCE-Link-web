@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oinance Link - Admin Dashboard</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0B0E11;
+      color: #EAECEF;
+      min-height: 100vh;
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+    
+    /* Login */
+    #loginSection {
+      max-width: 400px;
+      margin: 80px auto;
+      background: #1A1F27;
+      padding: 40px;
+      border-radius: 12px;
+    }
+    #loginSection h1 {
+      text-align: center;
+      color: #F0B90B;
+      margin-bottom: 30px;
+      font-size: 24px;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 15px;
+      border: 1px solid #2B3139;
+      border-radius: 8px;
+      background: #0B0E11;
+      color: white;
+      font-size: 15px;
+    }
+    button {
+      width: 100%;
+      padding: 13px;
+      background: #F0B90B;
+      color: #0B0E11;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    button:hover { background: #D4A017; }
+    
+    /* Dashboard */
+    #dashboardSection { display: none; }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #2B3139;
+    }
+    .header h1 { color: #F0B90B; font-size: 22px; }
+    .logout-btn {
+      width: auto;
+      padding: 8px 20px;
+      background: #F6465D;
+      color: white;
+    }
+    
+    .form-box {
+      background: #1A1F27;
+      padding: 25px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+    }
+    .form-box h2 { margin-bottom: 20px; font-size: 18px; }
+    
+    .articles-list {
+      background: #1A1F27;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .article-item {
+      padding: 18px 20px;
+      border-bottom: 1px solid #2B3139;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+    .article-item:last-child { border-bottom: none; }
+    .article-info h3 { font-size: 16px; margin-bottom: 5px; }
+    .article-info p { font-size: 13px; color: #848E9C; }
+    .delete-btn {
+      width: auto;
+      padding: 7px 14px;
+      background: #F6465D;
+      color: white;
+      font-size: 13px;
+    }
+    
+    .msg {
+      text-align: center;
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      display: none;
+    }
+    .success { background: #0ECB81; color: #0B0E11; }
+    .error { background: #F6465D; color: white; }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN SECTION -->
+  <div id="loginSection">
+    <h1>Oinance Link Admin</h1>
+    <div id="loginMsg" class="msg"></div>
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button onclick="login()">Login</button>
+    <p style="text-align:center; margin-top:20px; font-size:13px; color:#848E9C;">
+      First time? Create an account in Firebase → Authentication → Users → Add user
+    </p>
+  </div>
+
+  <!-- DASHBOARD SECTION -->
+  <div id="dashboardSection">
+    <div class="container">
+      <div class="header">
+        <h1>Admin Dashboard</h1>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </div>
+
+      <div id="dashMsg" class="msg"></div>
+
+      <!-- Add Article Form -->
+      <div class="form-box">
+        <h2>Post New Article</h2>
+        <input type="text" id="title" placeholder="Article Title">
+        <textarea id="content" rows="5" placeholder="Article content..."></textarea>
+        <input type="text" id="author" placeholder="Author name" value="Oinance Team">
+        <select id="category">
+          <option value="News">News</option>
+          <option value="Markets">Markets</option>
+          <option value="Bitcoin">Bitcoin</option>
+          <option value="Ethereum">Ethereum</option>
+          <option value="Magazine">Magazine</option>
+        </select>
+        <button onclick="addArticle()">Publish Article</button>
+      </div>
+
+      <!-- Articles List -->
+      <div class="articles-list" id="articlesList">
+        <div style="padding:20px; text-align:center; color:#848E9C;">Loading articles...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, orderBy, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDOk6hMScBEuRP3gGZdxCImCpykUPbFKbQ",
+      authDomain: "oinance-link.firebaseapp.com",
+      projectId: "oinance-link",
+      storageBucket: "oinance-link.firebasestorage.app",
+      messagingSenderId: "869892972160",
+      appId: "1:869892972160:web:9ac0dd434caaad9aa5d065"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Make functions global
+    window.login = async () => {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const msg = document.getElementById('loginMsg');
+      
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        msg.style.display = 'none';
+      } catch (error) {
+        msg.textContent = error.message;
+        msg.className = 'msg error';
+        msg.style.display = 'block';
+      }
+    };
+
+    window.logout = () => signOut(auth);
+
+    window.addArticle = async () => {
+      const title = document.getElementById('title').value.trim();
+      const content = document.getElementById('content').value.trim();
+      const author = document.getElementById('author').value.trim() || 'Oinance Team';
+      const category = document.getElementById('category').value;
+      const msg = document.getElementById('dashMsg');
+
+      if (!title || !content) {
+        msg.textContent = 'Title and content are required';
+        msg.className = 'msg error';
+        msg.style.display = 'block';
+        return;
+      }
+
+      try {
+        await addDoc(collection(db, 'articles'), {
+          title,
+          content,
+          author,
+          category,
+          createdAt: serverTimestamp()
+        });
+        
+        document.getElementById('title').value = '';
+        document.getElementById('content').value = '';
+        
+        msg.textContent = 'Article published successfully!';
+        msg.className = 'msg success';
+        msg.style.display = 'block';
+        
+        loadArticles();
+        
+        setTimeout(() => msg.style.display = 'none', 3000);
+      } catch (error) {
+        msg.textContent = error.message;
+        msg.className = 'msg error';
+        msg.style.display = 'block';
+      }
+    };
+
+    window.deleteArticle = async (id) => {
+      if (!confirm('Delete this article?')) return;
+      await deleteDoc(doc(db, 'articles', id));
+      loadArticles();
+    };
+
+    async function loadArticles() {
+      const list = document.getElementById('articlesList');
+      const q = query(collection(db, 'articles'), orderBy('createdAt', 'desc'));
+      const snapshot = await getDocs(q);
+      
+      if (snapshot.empty) {
+        list.innerHTML = '<div style="padding:20px; text-align:center; color:#848E9C;">No articles yet. Post your first one!</div>';
+        return;
+      }
+
+      list.innerHTML = '';
+      snapshot.forEach(docSnap => {
+        const data = docSnap.data();
+        const div = document.createElement('div');
+        div.className = 'article-item';
+        div.innerHTML = `
+          <div class="article-info">
+            <h3>${data.title}</h3>
+            <p>${data.category} • ${data.author} • ${data.createdAt ? new Date(data.createdAt.toDate()).toLocaleString() : 'Just now'}</p>
+          </div>
+          <button class="delete-btn" onclick="deleteArticle('${docSnap.id}')">Delete</button>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    // Auth state
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('dashboardSection').style.display = 'block';
+        loadArticles();
+      } else {
+        document.getElementById('loginSection').style.display = 'block';
+        document.getElementById('dashboardSection').style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
